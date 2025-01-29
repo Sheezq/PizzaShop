@@ -124,6 +124,9 @@
       <path value="$PROJECT_DIR$/app/vendor/ramsey/collection" />
       <path value="$PROJECT_DIR$/app/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/app/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/app/vendor/laravel/breeze" />
+      <path value="$PROJECT_DIR$/app/vendor/spatie/laravel-permission" />
+      <path value="$PROJECT_DIR$/app/vendor/stripe/stripe-php" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

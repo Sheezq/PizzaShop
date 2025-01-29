@@ -1,0 +1,30 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "repository": {
+dqwdf    "type": "git",
+    "url": "git+https://github.com/Sheezq/PizzaShop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sheezq/PizzaShop/issues"
+  },
+  "homepage": "https://github.com/Sheezq/PizzaShop#readme",
+  "description": "",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
+x
+Exit
+^X Exit           ^R Read File      ^\ Replace        ^U Paste          ^J Justify        ^/ Go To Line     M-E Redo          M-6 Copy          ^Q Where Was      M-W Next          ^F Forward        ^▸ Next Word      ^E End            ^N Next Li^X
+
+^X
+
