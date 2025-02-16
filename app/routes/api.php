@@ -4,7 +4,8 @@ use App\Http\Controllers\Api\PizzaController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |----------------------------------------------------------------------
@@ -33,4 +34,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders/{id}', [OrderController::class, 'show']);
 
     Route::post('/payments', [PaymentController::class, 'processPayment']);
+
+    Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+        Route::post('/pizzas', [PizzaController::class, 'store']);
+        Route::delete('/pizzas/{id}', [PizzaController::class, 'destroy']);
+    });
+
 });

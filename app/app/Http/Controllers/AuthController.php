@@ -6,33 +6,36 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\HasApiTokens;
 
 class AuthController extends Controller
 {
-    // Метод для отображения страницы регистрации
-    public function showRegistrationForm()
-    {
-        return view('auth.register');
-    }
-
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
+            'role' => 'in:user,admin',
         ]);
+
+        if ($request->role === 'admin' && Auth::user() && !Auth::user()->hasRole('admin')) {
+            return response()->json(['message' => 'У вас нет прав для установки роли админа'], 403);
+        }
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => trim($request->name),
+            'email' => trim($request->email),
             'password' => Hash::make($request->password),
+            'role' => $request->role ?? 'user',
         ]);
 
-        Auth::login($user); // Авторизуем пользователя после регистрации
+        $token = $user->createToken('API Token')->plainTextToken;
 
-        return redirect()->route('home')->with('success', 'Вы успешно зарегистрировались!');
+        return response()->json([
+            'message' => 'Вы успешно зарегистрировались!',
+            'user' => $user,
+            'token' => $token,
+        ], 201);
     }
 
     public function login(Request $request)
@@ -42,16 +45,25 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return back()->withErrors(['email' => 'Неверные учетные данные']);
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $user = Auth::user();
+
+            $token = $user->createToken('API Token')->plainTextToken;
+
+            return redirect()->route('welcome');
         }
 
-        return redirect()->route('home');
+        return back()->withErrors([
+            'email' => 'Неверные учетные данные.',
+        ]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+        Auth::user()->tokens()->delete();
+
         Auth::logout();
-        return redirect()->route('login')->with('success', 'Вы вышли из системы');
+
+        return redirect()->route('welcome');
     }
 }

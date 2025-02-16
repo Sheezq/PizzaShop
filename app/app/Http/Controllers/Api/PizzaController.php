@@ -3,47 +3,48 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pizza;
 use Illuminate\Http\Request;
 
 class PizzaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $pizzas = Pizza::all();
+
+        return response()->json($pizzas, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $pizza = Pizza::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+        ]);
+
+        return response()->json($pizza, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Удаление пиццы
+    public function destroy($id)
     {
-        //
-    }
+        $pizza = Pizza::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if (!$pizza) {
+            return response()->json(['message' => 'Пицца не найдена'], 404);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $pizza->delete();
+
+        return response()->json(['message' => 'Пицца удалена'], 200);
     }
 }
+
+
