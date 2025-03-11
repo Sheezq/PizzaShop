@@ -13,7 +13,7 @@
 <div class="container mt-4">
     <h1 class="text-center">Добро пожаловать на сайт пиццерии!</h1>
 
-    @if (Auth::check())
+@if (Auth::check())
         <p>Привет, {{ Auth::user()->name }}!</p>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
@@ -23,6 +23,12 @@
         <p>Вы не авторизованы.</p>
         <a href="{{ route('login') }}" class="btn btn-primary">Войти</a>
         <a href="{{ route('register') }}" class="btn btn-success">Зарегистрироваться</a>
+    @endif
+
+    @if(Auth::check() && Auth::user()->hasRole('admin'))
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-primary">Перейти в админ-панель</a>
+    @else
+        <p>Вы не администратор.</p>
     @endif
 
     <h2 class="mt-5">Список Пицц</h2>
@@ -35,8 +41,8 @@
             @foreach ($pizzas as $pizza)
                 <div class="col-md-4">
                     <div class="card mb-3">
-                        <!-- Поставь свою картинку или логику отображения -->
-                        <img src="{{ $pizza->image_url }}" class="card-img-top" alt="{{ $pizza->name }}" onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+                        <img src="{{ asset($pizza->image_url) }}" class="img-fluid" alt="{{ $pizza->name }}">
+
                         <div class="card-body">
                             <h5 class="card-title">{{ $pizza->name }}</h5>
                             <p class="card-text">{{ $pizza->description }}</p>

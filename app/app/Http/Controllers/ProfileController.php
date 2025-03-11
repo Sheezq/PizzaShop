@@ -13,11 +13,12 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:admin')->only(['edit', 'update', 'destroy']);
+        // Middleware для защиты админских методов
+        $this->middleware(['auth', 'role:admin'])->only(['edit', 'update', 'destroy']);
     }
 
     /**
-     * Display the user's profile form.
+     * Отображение профиля пользователя.
      */
     public function edit(Request $request): View
     {
@@ -27,7 +28,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Обновление профиля пользователя.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -43,7 +44,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * Удаление аккаунта пользователя.
      */
     public function destroy(Request $request): RedirectResponse
     {
