@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: php
+    user: "1000:1000"
     volumes:
       - ./app:/var/www/html
     networks:
@@ -45,7 +46,7 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     ports:
-      - "8081:80"  # phpMyAdmin будет доступен на порту 8081
+      - "8081:80"
     environment:
       PMA_HOST: mysql
       PMA_USER: laravel

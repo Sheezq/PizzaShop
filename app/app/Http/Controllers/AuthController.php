@@ -56,6 +56,12 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+
+        if ($user->banned) {
+            Auth::logout();
+            return response()->json(['message' => 'Ваш аккаунт заблокирован. Обратитесь к администратору.'], 403);
+        }
+
         $token = $user->createToken('API Token')->plainTextToken;
 
         return response()->json([
@@ -64,6 +70,7 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
+
 
     public function logout(Request $request)
     {

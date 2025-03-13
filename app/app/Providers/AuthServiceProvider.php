@@ -20,13 +20,24 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Используем Spatie Permission для проверки ролей
+        $this->registerPolicies();
+
+
         Gate::define('admin', function (User $user) {
-            return $user->hasRole('admin'); // Проверка роли через Spatie
+            return !$user->banned && $user->hasRole('admin');
         });
 
+
         Gate::define('user', function (User $user) {
-            return $user->hasRole('user');
+            return !$user->banned && $user->hasRole('user');
+        });
+
+
+        Gate::before(function (User $user) {
+            if ($user->banned) {
+                return false;
+            }
+            return null;
         });
     }
 }

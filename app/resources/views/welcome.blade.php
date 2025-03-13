@@ -47,7 +47,11 @@
                             <h5 class="card-title">{{ $pizza->name }}</h5>
                             <p class="card-text">{{ $pizza->description }}</p>
                             <p class="card-text">Цена: {{ $pizza->price }} ₽</p>
-                            <a href="{{ route('order', $pizza->id) }}" class="btn btn-success">Заказать</a>
+                            <form action="{{ route('cart.add', $pizza->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-warning">В корзину</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
