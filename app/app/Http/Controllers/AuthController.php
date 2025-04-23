@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
+    // Регистрация пользователя
     public function register(Request $request)
     {
         $request->validate([
@@ -44,24 +45,32 @@ class AuthController extends Controller
         ], 201);
     }
 
-    public function login(Request $request)
+    // Логин пользователя
+    public function login(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
+        // Проверяем, существует ли пользователь с данным email
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Неверные учетные данные.'], 401);
+        }
+
+        // Если пользователь заблокирован, сразу отклоняем вход
+        if ($user->banned) {
+            return response()->json(['message' => 'Ваш аккаунт заблокирован. Обратитесь к администратору.'], 403);
+        }
+
+        // Пробуем выполнить аутентификацию
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json(['message' => 'Неверные учетные данные.'], 401);
         }
 
-        $user = Auth::user();
-
-        if ($user->banned) {
-            Auth::logout();
-            return response()->json(['message' => 'Ваш аккаунт заблокирован. Обратитесь к администратору.'], 403);
-        }
-
+        // Генерация токена для авторизованного пользователя
         $token = $user->createToken('API Token')->plainTextToken;
 
         return response()->json([
@@ -71,12 +80,13 @@ class AuthController extends Controller
         ]);
     }
 
-
+    // Выход из системы
     public function logout(Request $request)
     {
+        // Проверяем, авторизован ли пользователь
         if (Auth::check()) {
             Auth::user()->tokens()->delete(); // Удаляем все токены пользователя
-            Auth::logout();
+            Auth::logout();  // Разлогиниваем пользователя
             return response()->json(['message' => 'Вы успешно вышли из системы!']);
         }
 
