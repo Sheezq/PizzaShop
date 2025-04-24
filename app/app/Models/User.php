@@ -27,7 +27,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'banned' => 'boolean',  // Убедитесь, что тип поля правильный
+        'banned' => 'boolean',
     ];
 
     protected $appends = ['is_banned'];

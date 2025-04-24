@@ -1,0 +1,238 @@
+/* 🔹 Общие стили */
+.avatar-thumbnail {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+/* 🔍 Поиск */
+.search-form {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 20px;
+    width: 100%;
+}
+.search-input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 20px 0 0 20px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+}
+.search-btn {
+    min-width: 120px;
+    padding: 10px;
+    border-radius: 0 20px 20px 0;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.search-btn:hover {
+    background-color: #0056b3;
+}
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+        margin: 10px 0;
+    }
+    .search-input, .search-btn {
+        border-radius: 20px;
+        width: 100%;
+        margin: 5px 0;
+    }
+    .search-btn {
+        min-width: unset;
+    }
+}
+
+/* 🍕 Карточки пиццы */
+.pizza-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+.pizza-card:hover {
+    transform: translateY(-5px);
+}
+.pizza-image {
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+.pizza-image:hover {
+    transform: scale(1.03);
+}
+.pizza-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.pizza-description {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+.pizza-price {
+    font-weight: bold;
+}
+
+/* 📊 Таблица */
+table.table {
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+table td, table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* 🛠 Кнопки */
+.btn {
+    min-width: 36px;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+.btn:hover {
+    transform: scale(1.05);
+}
+.btn-primary, .btn-success, .btn-warning, .btn-danger {
+    margin-left: 10px;
+}
+.btn-pay {
+    background-color: #198754;
+    color: white;
+    font-weight: 600;
+    padding: 10px 0;
+    border: none;
+    border-radius: 0.375rem;
+    transition: 0.2s ease;
+    width: 100%;
+}
+.btn-pay:hover {
+    background-color: #157347;
+}
+
+/* 💳 Оплата */
+.payment-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.6s ease-in-out;
+}
+.amount-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+#card-element {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    background-color: #fff;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+#card-element.StripeElement--focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+.stripe-error {
+    margin-top: 1rem;
+    color: #dc3545;
+    text-align: center;
+    font-weight: 500;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 👤 Регистрация/вход */
+.register-wrapper, .login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background-color: #f9fafb;
+    padding: 3rem 1rem;
+}
+.register-card, .login-card {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+.register-title, .login-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+/* 📄 Формы */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+.form-control {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+}
+.error-msg {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+.form-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+.form-link {
+    font-size: 0.9rem;
+    color: #64748b;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+.form-link:hover {
+    color: #1e293b;
+}
+.btn-submit {
+    background-color: #4f46e5;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+.btn-submit:hover {
+    background-color: #4338ca;
+}

@@ -7,6 +7,7 @@ use Stripe\Stripe;
 use Stripe\Charge;
 
 class PaymentController extends Controller
+
 {
     public function processPayment(Request $request)
     {
@@ -30,5 +31,9 @@ class PaymentController extends Controller
             return response()->json(['message' => 'Payment failed', 'error' => $e->getMessage()], 500);
         }
     }
+
+
+
+
 }
 

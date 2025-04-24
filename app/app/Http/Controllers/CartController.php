@@ -20,12 +20,16 @@ class CartController extends Controller
         if (isset($cart[$pizza->id])) {
             $cart[$pizza->id]['quantity']++;
         } else {
+            // Гарантируем, что image_url будет относительным от public/storage
+            $relativeImagePath = 'pizzas/' . basename($pizza->image_url);
+
             $cart[$pizza->id] = [
                 "name" => $pizza->name,
                 "price" => $pizza->price,
-                "image_url" => $pizza->image_url,
+                "image_url" => 'pizzas/' . basename($pizza->getRawOriginal('image_url')),
                 "quantity" => 1
             ];
+
         }
 
         session()->put('cart', $cart);
@@ -55,4 +59,18 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')->with('success', 'Корзина очищена!');
     }
+
+    public function checkout()
+    {
+        $cart = session()->get('cart', []);
+        $total = array_sum(array_map(function ($item) {
+            return $item['price'] * $item['quantity'];
+        }, $cart));
+
+        return view('payment.checkout', [
+            'total' => $total,
+            'pizzas' => $cart,
+        ]);
+    }
+
 }

@@ -46,31 +46,30 @@ class AuthController extends Controller
     }
 
     // Логин пользователя
-    public function login(Request $request): \Illuminate\Http\JsonResponse
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // Проверяем, существует ли пользователь с данным email
+        // Попытка найти пользователя
         $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Неверные учетные данные.'], 401);
         }
 
-        // Если пользователь заблокирован, сразу отклоняем вход
+        // Если пользователь заблокирован — сразу logout и редирект на страницу бана
         if ($user->banned) {
-            return response()->json(['message' => 'Ваш аккаунт заблокирован. Обратитесь к администратору.'], 403);
+            Auth::logout();
+            return redirect()->route('banned');
         }
 
-        // Пробуем выполнить аутентификацию
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['message' => 'Неверные учетные данные.'], 401);
-        }
+        // Аутентификация
+        Auth::login($user);
 
-        // Генерация токена для авторизованного пользователя
+        // Генерация токена (если используется Sanctum или Personal Access Tokens)
         $token = $user->createToken('API Token')->plainTextToken;
 
         return response()->json([

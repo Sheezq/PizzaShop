@@ -3,47 +3,44 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $orders = Order::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+
+        return response()->json($orders);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'total_price' => 'required|numeric|min:1',
+            'status' => 'nullable|string',
+        ]);
+
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'total_price' => $request->total_price,
+            'status' => $request->status ?? 'в обработке',
+        ]);
+
+        return response()->json($order, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($id)
     {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $order = Order::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if (!$order || $order->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Заказ не найден или у вас нет доступа'], 404);
+        }
+
+        return response()->json($order);
     }
 }

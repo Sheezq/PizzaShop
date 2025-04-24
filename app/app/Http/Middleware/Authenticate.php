@@ -32,9 +32,9 @@ class Authenticate extends Middleware
 
         $user = Auth::user();
 
-        if ($user && $user->banned) {
+        if (Auth::check() && Auth::user()->banned) {
             Auth::logout();
-            return response()->json(['message' => 'Ваш аккаунт заблокирован.'], 403);  // Возвращаем ошибку
+            return redirect()->route('banned');
         }
 
         return $next($request);  // Если не заблокирован, продолжаем выполнение запроса

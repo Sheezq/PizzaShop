@@ -9,7 +9,6 @@ class Pizza extends Model
 {
     use HasFactory;
 
-    // Разрешенные для массового заполнения поля
     protected $fillable = [
         'name',
         'description',
@@ -17,7 +16,6 @@ class Pizza extends Model
         'image_url',
     ];
 
-    // Аксессор для корректного отображения изображения
     public function getImageUrlAttribute($value)
     {
         return $value ? asset('storage/pizzas/' . $value) : asset('storage/pizzas/default.png');
