@@ -10,6 +10,9 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Pizza;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ContactController;
+
 
 Route::get('/', function () {
     $pizzas = Pizza::all();
@@ -71,3 +74,22 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/checkout', [CartController::class, 'checkout'])->name('payment.checkout');
 Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('payment.process');
 
+Route::get('/orders/history', [\App\Http\Controllers\OrderHistoryController::class, 'index'])->name('orders.history');
+
+Route::get('/credits', [\App\Http\Controllers\CreditController::class, 'index'])->name('credits.index');
+
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
+
+Route::get('/info', function () {
+    return view('info');
+})->name('info');
+
+Route::get('/contacts', function () {
+    return view('contacts');
+})->name('contacts');
+
+Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');

@@ -10,7 +10,6 @@ use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
-    // Регистрация пользователя
     public function register(Request $request)
     {
         $request->validate([
@@ -20,22 +19,18 @@ class AuthController extends Controller
             'role' => 'in:user,admin',
         ]);
 
-        // Проверяем, имеет ли текущий пользователь право назначать админа
         if ($request->role === 'admin' && (!Auth::check() || !Auth::user()->hasRole('admin'))) {
             return response()->json(['message' => 'У вас нет прав для назначения роли админа'], 403);
         }
 
-        // Создаем пользователя
         $user = User::create([
             'name' => trim($request->name),
             'email' => trim($request->email),
             'password' => Hash::make($request->password),
         ]);
 
-        // Назначаем роль через Spatie
         $user->assignRole($request->role ?? 'user');
 
-        // Создаем токен
         $token = $user->createToken('API Token')->plainTextToken;
 
         return response()->json([
@@ -45,7 +40,6 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // Логин пользователя
     public function login(Request $request)
     {
         $request->validate([
@@ -53,23 +47,19 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Попытка найти пользователя
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Неверные учетные данные.'], 401);
         }
 
-        // Если пользователь заблокирован — сразу logout и редирект на страницу бана
         if ($user->banned) {
             Auth::logout();
             return redirect()->route('banned');
         }
 
-        // Аутентификация
         Auth::login($user);
 
-        // Генерация токена (если используется Sanctum или Personal Access Tokens)
         $token = $user->createToken('API Token')->plainTextToken;
 
         return response()->json([
@@ -79,13 +69,11 @@ class AuthController extends Controller
         ]);
     }
 
-    // Выход из системы
     public function logout(Request $request)
     {
-        // Проверяем, авторизован ли пользователь
         if (Auth::check()) {
-            Auth::user()->tokens()->delete(); // Удаляем все токены пользователя
-            Auth::logout();  // Разлогиниваем пользователя
+            Auth::user()->tokens()->delete();
+            Auth::logout();
             return response()->json(['message' => 'Вы успешно вышли из системы!']);
         }
 

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
+    <title>О нашей Пиццерии</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('style.css') }}" rel="stylesheet">
 </head>
 <body>
 
@@ -15,39 +15,57 @@
 
 <div class="container mt-5">
 
-    <h2 class="section-title">Список Пицц</h2>
+    <section class="mb-5">
+        <h2 class="section-title text-center mb-4">О нашей пиццерии</h2>
+        <p class="lead text-center">
+            Добро пожаловать в нашу пиццерию! 🍕<br>
+            Мы готовим пиццу с любовью, используя только свежие ингредиенты и традиционные итальянские рецепты.
+            Наша цель — радовать каждого гостя вкусной едой и отличной атмосферой!
+        </p>
+    </section>
 
-    <div class="row g-4">
-        @if($pizzas->isEmpty())
-            <div class="col-12">
-                <p>Пиццы не найдены.</p>
-            </div>
-        @else
-            @foreach ($pizzas as $pizza)
-                <div class="col-sm-12 col-md-6 col-lg-4 d-flex">
-                    <div class="pizza-card card flex-fill">
-                        <img src="{{ $pizza->image_url }}" class="pizza-image card-img-top" alt="{{ $pizza->name }}">
+    <section class="mb-5">
+        <h2 class="section-title text-center mb-4">Наши акции</h2>
 
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <div>
-                                <h5 class="pizza-title card-title">{{ $pizza->name }}</h5>
-                                <p class="pizza-description card-text">{{ $pizza->description }}</p>
-                                <p class="pizza-price card-text">Цена: {{ number_format($pizza->price, 2) }} ₽</p>
-                            </div>
-
-                            <form action="{{ route('cart.add', $pizza->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-warning w-100 mt-3">В корзину</button>
-                            </form>
-                        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://sun9-73.userapi.com/impg/lUqxJriqP-MRmSDrCV-o2wRIwEyz_mV490LClw/zRLS8-Ru81w.jpg?size=1200x1200&quality=96&sign=260756b92c51a07aa04601518a9aca89&type=album" class="card-img-top" alt="Акция 1">
+                    <div class="card-body">
+                        <h5 class="card-title">2 по цене 1!</h5>
+                        <p class="card-text">Закажи одну пиццу и получи вторую бесплатно. Только по будням с 12:00 до 16:00.</p>
                     </div>
                 </div>
-            @endforeach
-        @endif
-    </div>
-</div>
+            </div>
 
-<!-- Bootstrap JS -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://sun9-18.userapi.com/impf/c852032/v852032748/1bfcba/qbdIASgKN5M.jpg?size=604x604&quality=96&sign=67ad0eaf1dbfe36de2c69ad58a97e82f&type=album" class="card-img-top" alt="Акция 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Скидка 20% на доставку</h5>
+                        <p class="card-text">Закажи доставку через сайт и получи скидку 20% на весь заказ!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://pizzahot.me/wp-content/uploads/2021/04/dr.jpg" class="card-img-top" alt="Акция 3">
+                    <div class="card-body">
+                        <h5 class="card-title">День рождения?</h5>
+                        <p class="card-text">Именинникам — большая пицца в подарок при заказе от 1500 ₽!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+@include('layouts.footer')
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+
 </html>
+

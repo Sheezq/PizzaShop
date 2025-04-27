@@ -42,9 +42,8 @@ class User extends Authenticatable
         return $this->hasRole('admin');
     }
 
-    // Переопределение getAuthIdentifierName() для использования кастомного поля
     public function getAuthIdentifierName(): string
     {
-        return 'email';  // или 'id' если ты используешь id
+        return 'email';
     }
 }

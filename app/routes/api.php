@@ -40,4 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/pizzas/{id}', [PizzaController::class, 'destroy']);
     });
 
+    Route::post('/bot/webhook', [\App\Http\Controllers\Api\BotController::class, 'webhook']);
+
+
 });

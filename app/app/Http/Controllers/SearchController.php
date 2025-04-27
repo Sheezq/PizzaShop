@@ -9,14 +9,13 @@ class SearchController extends Controller
 {
     public function search(Request $request)
     {
-        $query = $request->input('query'); // Строка поиска
+        $query = $request->input('query');
 
-        // Если есть строка запроса, выполняем поиск, иначе получаем все пиццы
+
         $pizzas = Pizza::where('name', 'like', '%' . $query . '%')
             ->orWhere('description', 'like', '%' . $query . '%')
             ->get();
 
-        // Передаем пиццы в представление
-        return view('welcome', compact('pizzas'));
+        return view('menu', compact('pizzas'));
     }
 }

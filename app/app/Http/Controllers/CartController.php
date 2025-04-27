@@ -20,22 +20,19 @@ class CartController extends Controller
         if (isset($cart[$pizza->id])) {
             $cart[$pizza->id]['quantity']++;
         } else {
-            // Гарантируем, что image_url будет относительным от public/storage
-            $relativeImagePath = 'pizzas/' . basename($pizza->image_url);
-
             $cart[$pizza->id] = [
-                "name" => $pizza->name,
-                "price" => $pizza->price,
-                "image_url" => 'pizzas/' . basename($pizza->getRawOriginal('image_url')),
-                "quantity" => 1
+                'name' => $pizza->name,
+                'price' => $pizza->price,
+                'image_url' => 'pizzas/' . basename($pizza->getRawOriginal('image_url')),
+                'quantity' => 1,
             ];
-
         }
 
         session()->put('cart', $cart);
 
-        return redirect()->route('cart.index')->with('success', 'Пицца добавлена в корзину!');
+        return redirect()->back()->with('success', 'Пицца добавлена в корзину!');
     }
+
 
     public function remove(Pizza $pizza)
     {

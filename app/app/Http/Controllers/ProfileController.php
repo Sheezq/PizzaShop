@@ -22,7 +22,7 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         $user = $request->user();
-        $orders = Order::where('user_id', $user->id)->get(); // Получаем заказы пользователя
+        $orders = Order::where('user_id', $user->id)->get();
 
         return view('profile.edit', [
             'user' => $user,
@@ -43,19 +43,17 @@ class ProfileController extends Controller
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Обновляем данные пользователя
+
         $user->name = $request->name;
         $user->email = $request->email;
 
-        // Если пользователь загрузил новый аватар
+
         if ($request->hasFile('avatar')) {
-            // Удаляем старый аватар (если есть)
             if ($user->avatar) {
                 Storage::delete($user->avatar);
             }
 
-            // Сохраняем новый аватар
-            $user->avatar = $request->file('avatar')->store('avatars', 'public'); // Убедитесь, что используется диск 'public'
+            $user->avatar = $request->file('avatar')->store('avatars', 'public');
         }
 
         $user->save();

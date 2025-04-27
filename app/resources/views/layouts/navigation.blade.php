@@ -1,45 +1,92 @@
-<link href="{{ asset('style.css') }}" rel="stylesheet">
-
+<!-- Навигационная панель -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container d-flex align-items-center justify-content-between">
+    <div class="container">
         <!-- Название -->
-        <a class="navbar-brand" href="{{ route('home') }}">Пиццерия</a>
+        <a class="navbar-brand" href="{{ route('home') }}">🍕BROLIU PICA</a>
 
-        <!-- Поисковая форма -->
-        <form method="GET" action="{{ route('search') }}" class="search-form">
-            <input
-                type="text"
-                name="query"
-                class="search-input"
-                placeholder="Поиск пиццы"
-                value="{{ request('query') }}"
-            >
-            <button type="submit" class="search-btn">Поиск</button>
-        </form>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <!-- Кнопки пользователя -->
-        <div class="navbar-nav d-flex align-items-center">
-            @if (Auth::check())
-                <!-- Профиль -->
-                <a class="nav-link d-flex align-items-center" href="{{ route('profile.edit') }}">
-                    <img src="{{ asset('storage/' . (Auth::user()->avatar ?? 'default-avatar.png')) }}" class="avatar-thumbnail" alt="Avatar" />
-                    {{ Auth::user()->name }}
-                </a>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Главная</a></li>
+                <a class="nav-link" href="{{ route('menu') }}">Меню</a>
+                <li class="nav-item"><a class="nav-link" href="{{ route('info') }}">Информация</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('contacts') }}">Контакты</a></li>
+            </ul>
 
-                <!-- Кнопка для выхода -->
-                <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Выйти</button>
-                </form>
+            <ul class="navbar-nav ms-auto">
+                @if (Auth::check())
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ asset('storage/' . (Auth::user()->avatar ?? 'default-avatar.png')) }}" class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover; margin-right: 5px;">
+                            {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Профиль</a></li>
+                            <li><a class="dropdown-item" href="{{ route('orders.history') }}">История заказов</a></li>
+                            <li><a class="dropdown-item" href="{{ route('credits.index') }}">Кредиты</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Выйти</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
 
-                @if(Auth::user()->hasRole('admin'))
-                    <a href="{{ route('admin.dashboard') }}" class="btn btn-warning">Перейти в админ-панель</a>
+                    @if(Auth::user()->hasRole('admin'))
+                        <li class="nav-item ms-2">
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-warning">Админ-панель</a>
+                        </li>
+                    @endif
+                @else
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="{{ route('login') }}">Войти</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-success" href="{{ route('register') }}">Регистрация</a>
+                    </li>
                 @endif
-            @else
-                <!-- Если пользователь не авторизован -->
-                <a class="btn btn-primary" href="{{ route('login') }}">Войти</a>
-                <a class="btn btn-success" href="{{ route('register') }}">Зарегистрироваться</a>
-            @endif
+            </ul>
+
+            <button id="theme-toggle" class="btn btn-outline-light ms-3">🌙</button>
+
+
+            <a href="{{ route('cart.index') }}" class="btn btn-outline-light ms-3">
+                <i class="bi bi-cart"></i>
+                <span id="cart-count">{{ \App\Models\Cart::getTotalCount() }}</span>
+            </a>
         </div>
     </div>
 </nav>
+
+<script>
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-toggle').innerHTML = '🌞';
+    } else {
+        document.body.classList.add('light-mode');
+        document.getElementById('theme-toggle').innerHTML = '🌙';
+    }
+
+
+    const themeToggleButton = document.getElementById('theme-toggle');
+
+    themeToggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        document.body.classList.toggle('light-mode');
+
+
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            themeToggleButton.innerHTML = '🌞';
+        } else {
+            localStorage.setItem('theme', 'light');
+            themeToggleButton.innerHTML = '🌙';
+        }
+    });
+</script>

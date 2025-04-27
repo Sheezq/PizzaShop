@@ -1,40 +1,55 @@
 /* 🔹 Общие стили */
 .avatar-thumbnail {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     object-fit: cover;
     border-radius: 50%;
     margin-right: 8px;
 }
 
-/* 🔍 Поиск */
+/*  Поиск */
+
+.form-inline {
+    display: flex;
+}
+
 .search-form {
     display: flex;
     align-items: center;
-    max-width: 400px;
-    margin: 0 20px;
+    background-color: #f1f5f9;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 320px;
     width: 100%;
+    margin: 0 20px;
 }
+
 .search-input {
-    flex-grow: 1;
-    padding: 10px;
-    border-radius: 20px 0 0 20px;
-    border: 1px solid #ddd;
+    flex: 1;
+    padding: 8px 14px;
+    border: none;
     font-size: 14px;
+    background: transparent;
     outline: none;
 }
+
+.btn {
+
+}
+
 .search-btn {
-    min-width: 120px;
-    padding: 10px;
-    border-radius: 0 20px 20px 0;
-    background-color: #007bff;
-    color: white;
+    background-color: #ffc107;
     border: none;
+    color: #212529;
+    padding: 8px 18px;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-size: 14px;
 }
+
 .search-btn:hover {
-    background-color: #0056b3;
+    background-color: #e0a800;
 }
 @media (max-width: 768px) {
     .search-form {
@@ -51,7 +66,6 @@
     }
 }
 
-/* 🍕 Карточки пиццы */
 .pizza-card {
     border: none;
     border-radius: 12px;
@@ -84,7 +98,7 @@
     font-weight: bold;
 }
 
-/* 📊 Таблица */
+/*  Таблица */
 table.table {
     border-radius: 12px;
     background-color: #fff;
@@ -97,16 +111,16 @@ table td, table th {
 
 /* 🛠 Кнопки */
 .btn {
-    min-width: 36px;
     font-weight: bold;
     transition: transform 0.2s ease;
 }
 .btn:hover {
     transform: scale(1.05);
 }
-.btn-primary, .btn-success, .btn-warning, .btn-danger {
+/*.btn-primary, .btn-success, .btn-warning, .btn-danger {
     margin-left: 10px;
-}
+}*/
+
 .btn-pay {
     background-color: #198754;
     color: white;
@@ -236,3 +250,234 @@ table td, table th {
 .btn-submit:hover {
     background-color: #4338ca;
 }
+
+/* 👤 Меню пользователя */
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-name {
+    font-weight: bold;
+    color: #fff;
+    gap: 8px;
+}
+
+/* Выпадающее меню */
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    z-index: 999;
+    text-align: left;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Активация меню при наведении */
+.user-menu:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+    background-color: #f0f0f0;
+}
+
+.logout-btn {
+    width: 100%;
+    text-align: left;
+}
+
+.orders-history-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 4rem 1rem;
+    min-height: 80vh;
+    background-color: #f9fafb;
+}
+
+.orders-history-container {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+}
+
+.orders-history-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #1f2937;
+}
+
+.orders-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.empty-orders-image {
+    width: 150px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.empty-orders-text {
+    font-size: 1.2rem;
+    color: #6b7280;
+}
+
+.orders-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.order-item {
+    background: #f3f4f6;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
+    transition: background 0.3s;
+}
+
+.order-item:hover {
+    background: #e5e7eb;
+}
+
+.order-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* 🏠 О нас страница */
+/* Секция про акции */
+.row.g-4 {
+    margin-top: 2rem;
+}
+
+/* Карточки акций */
+.card {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #6b7280;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #2d2d2d;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 1.5rem 0;
+    border-top: 1px solid #dee2e6;
+}
+
+.footer .text-muted {
+    font-size: 0.9rem;
+}
+
+.footer a:hover {
+    color: #212529;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+
+
+body.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+
