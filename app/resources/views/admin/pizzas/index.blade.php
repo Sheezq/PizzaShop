@@ -17,6 +17,7 @@
                 <th>Название</th>
                 <th>Описание</th>
                 <th>Цена</th>
+                <th>Тип</th>
                 <th>Действия</th>
             </tr>
             </thead>
@@ -27,6 +28,14 @@
                     <td>{{ $pizza->name }}</td>
                     <td>{{ $pizza->description }}</td>
                     <td>{{ $pizza->price }} ₽</td>
+                    <td>
+                        @if($pizza->type === 'meat') С мясом
+                        @elseif($pizza->type === 'fish') Рыбная
+                        @elseif($pizza->type === 'veggie') Вегетарианская
+                        @else -
+                        @endif
+                    </td>
+
                     <td>
                         <a href="{{ route('admin.pizzas.edit', $pizza->id) }}" class="btn btn-warning btn-sm">Редактировать</a>
                         <form action="{{ route('admin.pizzas.destroy', $pizza->id) }}" method="POST" class="d-inline">

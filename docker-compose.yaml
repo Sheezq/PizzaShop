@@ -25,6 +25,15 @@ services:
     networks:
       - laravel
 
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+    networks:
+      - laravel
+
   # MySQL Container
   mysql:
     image: mysql:8

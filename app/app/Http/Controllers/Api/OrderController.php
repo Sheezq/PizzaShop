@@ -51,7 +51,7 @@ class OrderController extends Controller
     private function sendOrderToTelegram(Order $order)
     {
         $botToken = '7603115928:AAEbm2N3HvhtH6GNWOcrSBjD4xhvCPZR_XA';
-        $chatId = '335649816'; // id чата куда отправлять уведомления
+        $chatId = '335649816';
 
         $user = Auth::user();
 

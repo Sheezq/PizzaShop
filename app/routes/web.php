@@ -12,6 +12,9 @@ use App\Models\Pizza;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CheckoutController;
+use Illuminate\Http\Request;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 Route::get('/', function () {
@@ -93,3 +96,17 @@ Route::post('/contact/submit', [ContactController::class, 'submit'])->name('cont
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+
+Route::get('/menu', [\App\Http\Controllers\SearchController::class, 'search'])->name('menu');
+
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+
+Route::get('/payment/thankyou', function (Request $request) {
+    return view('payment.thankyou', [
+        'name' => $request->query('name'),
+        'amount' => $request->query('amount'),
+        'payment' => $request->query('payment'),
+    ]);
+})->name('payment.thankyou');
+

@@ -127,6 +127,7 @@
       <path value="$PROJECT_DIR$/app/vendor/laravel/breeze" />
       <path value="$PROJECT_DIR$/app/vendor/spatie/laravel-permission" />
       <path value="$PROJECT_DIR$/app/vendor/stripe/stripe-php" />
+      <path value="$PROJECT_DIR$/app/vendor/mcamara/laravel-localization" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

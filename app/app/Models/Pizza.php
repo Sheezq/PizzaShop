@@ -14,6 +14,7 @@ class Pizza extends Model
         'description',
         'price',
         'image_url',
+        'type'
     ];
 
     public function getImageUrlAttribute($value)

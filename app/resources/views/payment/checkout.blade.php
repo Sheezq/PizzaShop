@@ -34,10 +34,44 @@
                 💰 Сумма к оплате: <strong class="text-primary">{{ number_format($total, 2) }} ₽</strong>
             </p>
 
-            <form id="payment-form" method="POST" action="{{ route('payment.process') }}">
+            <form id="payment-form" method="POST" action="{{ route('checkout.process') }}">
                 @csrf
                 <input type="hidden" name="amount" value="{{ $total }}">
                 <input type="hidden" name="token" id="stripe-token">
+
+                <div class="mb-3">
+                    <label class="form-label">ФИО</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Телефон</label>
+                    <input type="text" name="phone" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Адрес доставки</label>
+                    <textarea name="address" class="form-control" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Комментарий к заказу</label>
+                    <textarea name="note" class="form-control" rows="2"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Способ оплаты</label>
+                    <select name="payment_method" class="form-select" required>
+                        <option value="card_online">Картой на сайте</option>
+                        <option value="cash">Наличными курьеру</option>
+                        <option value="courier_card">Картой курьеру</option>
+                    </select>
+                </div>
 
                 <div id="card-element" class="stripe-input mb-3"></div>
 
@@ -50,7 +84,7 @@
 
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        const stripe = Stripe('{{ env('STRIPE_KEY') }}');
+        const stripe = Stripe("{{ config('services.stripe.key') }}");
         const elements = stripe.elements();
         const card = elements.create('card', {
             style: {
@@ -73,11 +107,18 @@
         const form = document.getElementById('payment-form');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const { token, error } = await stripe.createToken(card);
-            if (error) {
-                alert(error.message);
+
+            const method = document.querySelector('[name="payment_method"]').value;
+
+            if (method === 'card_online') {
+                const { token, error } = await stripe.createToken(card);
+                if (error) {
+                    alert(error.message);
+                } else {
+                    document.getElementById('stripe-token').value = token.id;
+                    form.submit();
+                }
             } else {
-                document.getElementById('stripe-token').value = token.id;
                 form.submit();
             }
         });

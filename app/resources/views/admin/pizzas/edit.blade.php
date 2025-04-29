@@ -30,6 +30,16 @@
                 @endif
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Тип пиццы</label>
+                <select name="type" class="form-select" required>
+                    <option value="meat" {{ $pizza->type == 'meat' ? 'selected' : '' }}>С мясом</option>
+                    <option value="fish" {{ $pizza->type == 'fish' ? 'selected' : '' }}>Рыбная</option>
+                    <option value="veggie" {{ $pizza->type == 'veggie' ? 'selected' : '' }}>Вегетарианская</option>
+                </select>
+            </div>
+
+
             <button type="submit" class="btn btn-success">Сохранить</button>
         </form>
     </div>

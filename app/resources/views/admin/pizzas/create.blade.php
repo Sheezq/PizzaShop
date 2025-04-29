@@ -27,6 +27,17 @@
                 <input type="file" name="image" class="form-control">
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Тип пиццы</label>
+                <select name="type" class="form-select" required>
+                    <option value="">-- Выберите тип --</option>
+                    <option value="meat">С мясом</option>
+                    <option value="fish">Рыбная</option>
+                    <option value="veggie">Вегетарианская</option>
+                </select>
+            </div>
+
+
             <button type="submit" class="btn btn-success">Добавить</button>
         </form>
     </div>
