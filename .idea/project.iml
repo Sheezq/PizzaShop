@@ -126,6 +126,12 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/spatie/laravel-permission" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/stripe/stripe-php" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/mcamara/laravel-localization" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/laravel/socialite" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/league/oauth1-client" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/paragonie/constant_time_encoding" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phpseclib/phpseclib" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -15,6 +15,10 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CheckoutController;
 use Illuminate\Http\Request;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PageController;
 
 
 Route::get('/', function () {
@@ -109,4 +113,30 @@ Route::get('/payment/thankyou', function (Request $request) {
         'payment' => $request->query('payment'),
     ]);
 })->name('payment.thankyou');
+
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('auth.google');
+
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->user();
+
+    $user = User::firstOrCreate(
+        ['email' => $googleUser->getEmail()],
+        ['name' => $googleUser->getName() ?? 'No Name', 'password' => bcrypt(Str::random(16))]
+    );
+
+    Auth::login($user);
+    return redirect('/');
+});
+
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy.policy');
+
+Route::get('/terms-of-service', function () {
+    return view('terms-of-service');
+})->name('terms.of.service');
+
+Route::get('/{page}', [PageController::class, 'static'])->whereIn('page', ['terms', 'privacy']);
 

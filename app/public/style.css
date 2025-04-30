@@ -13,6 +13,11 @@
     display: flex;
 }
 
+.custom-navbar {
+    background-color: #232323;
+}
+
+
 .search-form {
     display: flex;
     align-items: center;
@@ -434,7 +439,7 @@ table td, table th {
 }
 
 .footer {
-    background-color: #f8f9fa;
+    background-color: #232323;
     padding: 1.5rem 0;
     border-top: 1px solid #dee2e6;
 }
@@ -478,6 +483,33 @@ body.light-mode {
 body.dark-mode {
     background-color: #121212;
     color: #ffffff;
+}
+
+.google-login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    color: #444;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+.google-login-btn:hover {
+    background-color: #f7f7f7;
+}
+
+.custom-navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar .dropdown-toggle {
+    color: white !important;
 }
 
 

@@ -9,6 +9,15 @@
             <!-- Session Status -->
             <x-auth-session-status class="mb-4 text-green-600 text-sm" :status="session('status')" />
 
+            <div class="form-group text-center">
+                <a href="{{ route('auth.google') }}" class="google-login-btn">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="width:20px; margin-right:8px;">
+                    Войти через Google
+                </a>
+            </div>
+            <hr style="margin: 20px 0;">
+
+
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
