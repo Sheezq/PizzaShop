@@ -27,7 +27,6 @@ class CheckoutController extends Controller
             'token' => 'required_if:payment_method,card_online',
         ]);
 
-        // Онлайн-оплата через Stripe
         if ($validated['payment_method'] === 'card_online') {
             Stripe::setApiKey(env('STRIPE_SECRET'));
 
@@ -43,7 +42,6 @@ class CheckoutController extends Controller
             }
         }
 
-        // Сохраняем заказ
         $order = Order::create([
             'user_id' => auth()->user()?->id ?? null,
             'total_price' => $validated['amount'],

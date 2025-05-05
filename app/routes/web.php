@@ -20,12 +20,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PageController;
 
-
+Route::middleware('auth')->group(function () {
 Route::get('/', function () {
     $pizzas = Pizza::all();
     return view('welcome', compact('pizzas'));
 })->name('home');
-
+});
 Route::get('/order', [OrderController::class, 'index'])->name('order');
 
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register.form');

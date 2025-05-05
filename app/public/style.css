@@ -1,4 +1,4 @@
-/* 🔹 Общие стили */
+/*  Общие стили */
 .avatar-thumbnail {
     width: 32px;
     height: 32px;
@@ -114,7 +114,7 @@ table td, table th {
     vertical-align: middle;
 }
 
-/* 🛠 Кнопки */
+/*  Кнопки */
 .btn {
     font-weight: bold;
     transition: transform 0.2s ease;
@@ -140,7 +140,7 @@ table td, table th {
     background-color: #157347;
 }
 
-/* 💳 Оплата */
+/* Оплата */
 .payment-wrapper {
     max-width: 600px;
     margin: 0 auto;
@@ -179,7 +179,7 @@ table td, table th {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 👤 Регистрация/вход */
+/* Регистрация/вход */
 .register-wrapper, .login-wrapper {
     display: flex;
     justify-content: center;
@@ -204,7 +204,7 @@ table td, table th {
     margin-bottom: 1.5rem;
 }
 
-/* 📄 Формы */
+/* Формы */
 .form-group {
     margin-bottom: 1.25rem;
 }
@@ -256,7 +256,7 @@ table td, table th {
     background-color: #4338ca;
 }
 
-/* 👤 Меню пользователя */
+/* Меню пользователя */
 .user-menu {
     position: relative;
     display: inline-block;
@@ -394,8 +394,10 @@ table td, table th {
     color: #374151;
 }
 
-/* 🏠 О нас страница */
-/* Секция про акции */
+/* О нас страница */
+
+
+/* акции */
 .row.g-4 {
     margin-top: 2rem;
 }
