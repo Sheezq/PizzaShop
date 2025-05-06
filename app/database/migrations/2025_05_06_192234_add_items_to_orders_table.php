@@ -9,15 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-// database/migrations/xxxx_xx_xx_xxxxxx_add_details_to_orders_table.php
-
-    public function up(): void
+    public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-
+            $table->json('items')->nullable();
         });
     }
-
 
     /**
      * Reverse the migrations.

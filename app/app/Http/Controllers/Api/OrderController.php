@@ -25,6 +25,7 @@ class OrderController extends Controller
         $order = Order::create([
             'user_id' => Auth::id(),
             'total_price' => $request->total_price,
+            'items' => session('cart'),
             'status' => $request->status ?? 'в обработке',
         ]);
 

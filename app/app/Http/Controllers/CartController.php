@@ -4,18 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pizza;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $cart = session()->get('cart', []);
+        $userId = Auth::id();
+
+        $cart = session()->get("cart_$userId", []);
+
         return view('cart.index', compact('cart'));
     }
 
+
     public function add(Pizza $pizza)
     {
-        $cart = session()->get('cart', []);
+
+        $userId = Auth::id();
+
+        $cart = session()->get("cart_$userId", []);
 
         if (isset($cart[$pizza->id])) {
             $cart[$pizza->id]['quantity']++;
@@ -28,7 +36,7 @@ class CartController extends Controller
             ];
         }
 
-        session()->put('cart', $cart);
+        session()->put("cart_$userId", $cart);
 
         return redirect()->back()->with('success', 'Пицца добавлена в корзину!');
     }
@@ -36,7 +44,9 @@ class CartController extends Controller
 
     public function remove(Pizza $pizza)
     {
-        $cart = session()->get('cart', []);
+        $userId = Auth::id();
+
+        $cart = session()->get("cart_$userId", []);
 
         if (isset($cart[$pizza->id])) {
             if ($cart[$pizza->id]['quantity'] > 1) {
@@ -44,7 +54,8 @@ class CartController extends Controller
             } else {
                 unset($cart[$pizza->id]);
             }
-            session()->put('cart', $cart);
+
+            session()->put("cart_$userId", $cart);
         }
 
         return redirect()->route('cart.index')->with('success', 'Пицца удалена из корзины!');
@@ -52,14 +63,23 @@ class CartController extends Controller
 
     public function clear()
     {
-        session()->forget('cart');
+        $userId = Auth::id();
+
+        session()->forget("cart_$userId");
 
         return redirect()->route('cart.index')->with('success', 'Корзина очищена!');
     }
 
     public function checkout()
     {
-        $cart = session()->get('cart', []);
+        $userId = Auth::id();
+
+        $cart = session()->get("cart_$userId", []);
+
+        if (empty($cart)) {
+            return redirect()->route('cart.index')->with('error', 'Ваша корзина пуста!');
+        }
+
         $total = array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
         }, $cart));
@@ -69,5 +89,4 @@ class CartController extends Controller
             'pizzas' => $cart,
         ]);
     }
-
 }

@@ -9,13 +9,9 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-// database/migrations/xxxx_xx_xx_xxxxxx_add_details_to_orders_table.php
-
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
 
-        });
     }
 
 
@@ -24,8 +20,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('pizzas');
     }
 };

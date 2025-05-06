@@ -9,8 +9,14 @@ class OrderHistoryController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        $orders = Order::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('orders.history', compact('orders'));
     }
+
+
 }
+
+

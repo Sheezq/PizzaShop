@@ -9,13 +9,47 @@
                 У вас пока нет заказов.
             </div>
         @else
-            <ul class="list-group">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
                 @foreach($orders as $order)
-                    <li class="list-group-item">
-                        Заказ #{{ $order->id }} - {{ $order->total_price }} ₽ - {{ $order->created_at->format('d.m.Y H:i') }}
-                    </li>
+                    <div class="col">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">📦 Заказ #{{ $order->id }}</h5>
+                                <p class="card-text mb-1">
+                                    <strong>Сумма:</strong> <span class="text-success">{{ number_format($order->total_price, 2) }} ₽</span>
+                                </p>
+                                <p class="card-text mb-1">
+                                    <strong>Дата:</strong> {{ $order->created_at->format('d.m.Y H:i') }}
+                                </p>
+                                @if(isset($order->status))
+                                    <p class="card-text mb-2">
+                                        <strong>Статус:</strong>
+                                        <span class="badge bg-{{ $order->status === 'завершён' ? 'success' : 'secondary' }}">
+                                            {{ ucfirst($order->status) }}
+                                        </span>
+                                    </p>
+                                @endif
+
+                                {{-- Состав заказа --}}
+                                @if(!empty($order->items))
+                                    <hr>
+                                    <p class="fw-bold mb-2">Состав заказа:</p>
+                                    <ul class="list-group list-group-flush">
+                                        @foreach($order->items as $item)
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                {{ $item['name'] }}
+                                                <span class="badge bg-primary rounded-pill">
+                                                    {{ $item['quantity'] }} × {{ number_format($item['price'], 2) }} ₽
+                                                </span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
-            </ul>
+            </div>
         @endif
     </div>
 @endsection

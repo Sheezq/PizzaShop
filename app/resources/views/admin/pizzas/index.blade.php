@@ -29,10 +29,10 @@
                     <td>{{ $pizza->description }}</td>
                     <td>{{ $pizza->price }} ₽</td>
                     <td>
-                        @if($pizza->type === 'meat') С мясом
-                        @elseif($pizza->type === 'fish') Рыбная
-                        @elseif($pizza->type === 'veggie') Вегетарианская
-                        @else -
+                        @if(is_object($pizza->type) && $pizza->type->name)
+                            {{ $pizza->type->name }}
+                        @else
+                            -
                         @endif
                     </td>
 

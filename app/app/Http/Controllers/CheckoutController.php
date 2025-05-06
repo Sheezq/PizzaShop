@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmationMail;
 
-
 class CheckoutController extends Controller
 {
     public function process(Request $request)
@@ -26,6 +25,9 @@ class CheckoutController extends Controller
             'note' => 'nullable|string|max:1000',
             'token' => 'required_if:payment_method,card_online',
         ]);
+
+        $userId = Auth::id();
+        $cart = session()->get("cart_$userId", []);
 
         if ($validated['payment_method'] === 'card_online') {
             Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -52,28 +54,36 @@ class CheckoutController extends Controller
             'address' => $validated['address'],
             'note' => $validated['note'] ?? null,
             'payment_method' => $validated['payment_method'],
+            'items' => $cart,
         ]);
 
-        $this->sendOrderToTelegram($order);
-        Mail::to($order->email)->send(new OrderConfirmationMail($order));
 
+        $this->sendOrderToTelegram($order);
+        Mail::to($order->email)->send(new OrderConfirmationMail($order, $order->items));
+
+        session()->forget('cart_' . Auth::user()->email);
+        session()->save();
 
         return redirect()->route('payment.thankyou', [
             'name' => $order->name,
             'amount' => $order->total_price,
-            'payment' => $order->payment_method,]);
-
+            'payment' => $order->payment_method,
+        ]);
     }
+
 
     private function escapeMarkdown($text)
     {
-        $escape = ['\\', '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '@'];
-        foreach ($escape as $char) {
+        $specialChars = ['\\', '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '=', '|', '{', '}', '.', '!', '@'];
+
+        $text = str_replace('-', '\-', $text);
+
+        foreach ($specialChars as $char) {
             $text = str_replace($char, '\\' . $char, $text);
         }
+
         return $text;
     }
-
 
 
     private function sendOrderToTelegram(Order $order)
@@ -81,25 +91,29 @@ class CheckoutController extends Controller
         $botToken = env('TELEGRAM_BOT_TOKEN');
         $chatId = env('TELEGRAM_CHAT_ID');
 
-        $message = $this->escapeMarkdown("📦 Новый заказ!");
-        $message .= "👤 Имя: " . $this->escapeMarkdown($order->name) . "\n";
-        $message .= "📧 Email: " . $this->escapeMarkdown($order->email) . "\n";
-        $message .= "📱 Телефон: " . $this->escapeMarkdown($order->phone) . "\n";
-        $message .= "🏠 Адрес: " . $this->escapeMarkdown($order->address) . "\n";
-        $message .= "💬 Пожелания: " . $this->escapeMarkdown($order->note ?? '—') . "\n";
-        $message .= "💳 Способ оплаты: " . $this->escapeMarkdown($order->payment_method) . "\n";
+        $message = "📦 Новый заказ!\n";
+        $message .= "👤 Имя: " . $order->name . "\n";
+        $message .= "📧 Email: " . $order->email . "\n";
+        $message .= "📱 Телефон: " . $order->phone . "\n";
+        $message .= "🏠 Адрес: " . $order->address . "\n";
+        $message .= "💬 Пожелания: " . ($order->note ?? '—') . "\n";
+        $message .= "💳 Способ оплаты: " . $order->payment_method . "\n";
         $message .= "💵 Сумма: " . $order->total_price . " ₽\n";
 
-        $response = Http::get("https://api.telegram.org/bot{$botToken}/sendMessage", [
+        $message .= "\n🍕 Товары в заказе:\n";
+        foreach ($order->items as $item) {
+            $message .= "🧀 " . $item['name'] . " - " . $item['quantity'] . " шт. x " . $item['price'] . " ₽\n";
+        }
+
+        $response = Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
             'chat_id' => $chatId,
             'text' => $message,
-            'parse_mode' => 'MarkdownV2',
         ]);
 
         if (!$response->successful()) {
             \Log::error('Ошибка при отправке в Telegram: ' . $response->body());
+            \Log::error('HTTP статус код: ' . $response->status());
         }
-
     }
 
 }

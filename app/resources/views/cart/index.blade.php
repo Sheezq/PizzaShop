@@ -4,6 +4,8 @@
 
     @include('layouts.navigation')
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('style.css') }}" rel="stylesheet">
 
     <div class="container mt-5">
@@ -15,9 +17,10 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        @if(empty($cart))
+        @if(empty($cart) || !is_array($cart) || count($cart) === 0)
             <div class="alert alert-info text-center">🧺 Ваша корзина пуста</div>
         @else
+
             <div class="table-responsive">
                 <table class="table align-middle table-bordered table-hover shadow-sm rounded overflow-hidden">
                     <thead class="table-dark text-center">

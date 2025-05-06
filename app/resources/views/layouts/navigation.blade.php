@@ -1,7 +1,9 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
     <div class="container d-flex justify-content-between align-items-center position-relative">
 
-        <!-- Левая часть: меню -->
         <ul class="navbar-nav flex-row">
             <li class="nav-item me-3"><a class="nav-link" href="{{ route('home') }}">Главная</a></li>
             <li class="nav-item me-3"><a class="nav-link" href="{{ route('menu') }}">Меню</a></li>
@@ -9,12 +11,10 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('contacts') }}">Контакты</a></li>
         </ul>
 
-        <!-- Центр: логотип -->
         <a href="{{ route('home') }}" class="position-absolute start-50 translate-middle-x">
             <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" style="height: 40px;">
         </a>
 
-        <!-- Правая часть: пользователь / кнопки / корзина -->
         <div class="d-flex align-items-center">
             @if (Auth::check())
                 <div class="dropdown me-2">
@@ -47,7 +47,7 @@
                 <a class="btn btn-success me-2" href="{{ route('register') }}">Регистрация</a>
             @endif
 
-            <button id="theme-toggle" class="btn btn-outline-light me-2">🌙</button>
+                {{-- <button id="theme-toggle" class="btn btn-outline-light me-2">🌙</button> --}}
 
             <a href="{{ route('cart.index') }}" class="btn btn-outline-light">
                 <i class="bi bi-cart"></i>

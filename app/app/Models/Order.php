@@ -19,6 +19,7 @@ class Order extends Model
         'address',
         'note',
         'payment_method',
+        'items',
     ];
 
 
@@ -26,5 +27,10 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $casts = [
+        'cart_data' => 'array',
+        'items' => 'array',
+    ];
 }
 

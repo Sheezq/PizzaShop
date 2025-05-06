@@ -31,13 +31,16 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Тип пиццы</label>
-                <select name="type" class="form-select" required>
-                    <option value="meat" {{ $pizza->type == 'meat' ? 'selected' : '' }}>С мясом</option>
-                    <option value="fish" {{ $pizza->type == 'fish' ? 'selected' : '' }}>Рыбная</option>
-                    <option value="veggie" {{ $pizza->type == 'veggie' ? 'selected' : '' }}>Вегетарианская</option>
+                <label for="type_id" class="form-label">Тип пиццы</label>
+                <select name="type_id" id="type_id" class="form-select" required>
+                    @foreach($types as $type)
+                        <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>
+                            {{ $type->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
+
 
 
             <button type="submit" class="btn btn-success">Сохранить</button>

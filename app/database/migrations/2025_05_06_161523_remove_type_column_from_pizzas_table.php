@@ -9,20 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    // В миграции, которая будет создана
+    public function up()
     {
         Schema::table('pizzas', function (Blueprint $table) {
+            $table->dropColumn('type');
         });
     }
 
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('pizzas', function (Blueprint $table) {
-            //
+            $table->string('type')->nullable();  // Возвращаем колонку, если потребуется откатить миграцию
         });
     }
+
 };

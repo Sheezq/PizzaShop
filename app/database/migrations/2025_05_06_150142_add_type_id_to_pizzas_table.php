@@ -9,23 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-// database/migrations/xxxx_xx_xx_xxxxxx_add_details_to_orders_table.php
-
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('pizzas', function (Blueprint $table) {
+            $table->unsignedBigInteger('type_id')->nullable();
 
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            //
+        Schema::table('pizzas', function (Blueprint $table) {
+            $table->dropForeign(['type_id']);
+
+            $table->dropColumn('type_id');
         });
     }
 };

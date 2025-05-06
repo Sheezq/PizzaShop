@@ -25,18 +25,13 @@
                     <input type="text" name="query" class="form-control mb-3" placeholder="Поиск..." value="{{ request('query') }}">
 
                     <h5 class="mb-2">Тип пиццы</h5>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="type[]" value="meat" {{ in_array('meat', request()->get('type', [])) ? 'checked' : '' }}>
-                        <label class="form-check-label">С мясом</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="type[]" value="fish" {{ in_array('fish', request()->get('type', [])) ? 'checked' : '' }}>
-                        <label class="form-check-label">Рыбная</label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" name="type[]" value="veggie" {{ in_array('veggie', request()->get('type', [])) ? 'checked' : '' }}>
-                        <label class="form-check-label">Вегетарианская</label>
-                    </div>
+                    @foreach($types as $type)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="type[]" value="{{ $type->name }}"
+                                {{ in_array($type->name, request()->get('type', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label">{{ $type->name }}</label>
+                        </div>
+                    @endforeach
 
                     <button class="btn btn-primary w-100 mt-2" type="submit">Применить</button>
                 </div>
@@ -58,6 +53,7 @@
                 </select>
             </form>
 
+            <!-- Пиццы -->
             <div class="row g-4">
                 @if($pizzas->isEmpty())
                     <div class="col-12 text-center">

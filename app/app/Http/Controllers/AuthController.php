@@ -10,6 +10,16 @@ use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
     public function register(Request $request)
     {
         $request->validate([
@@ -31,13 +41,9 @@ class AuthController extends Controller
 
         $user->assignRole($request->role ?? 'user');
 
-        $token = $user->createToken('API Token')->plainTextToken;
+        Auth::login($user);
 
-        return response()->json([
-            'message' => 'Вы успешно зарегистрировались!',
-            'user' => $user,
-            'token' => $token,
-        ], 201);
+        return redirect()->route('home');
     }
 
     public function login(Request $request)
@@ -50,7 +56,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Неверные учетные данные.'], 401);
+            return back()->withErrors(['email' => 'Неверные учетные данные.'])->withInput();
         }
 
         if ($user->banned) {
@@ -60,13 +66,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        $token = $user->createToken('API Token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Вы успешно вошли в систему!',
-            'user' => $user,
-            'token' => $token,
-        ]);
+        return redirect()->intended(route('home'));
     }
 
     public function logout(Request $request)
@@ -74,9 +74,8 @@ class AuthController extends Controller
         if (Auth::check()) {
             Auth::user()->tokens()->delete();
             Auth::logout();
-            return response()->json(['message' => 'Вы успешно вышли из системы!']);
         }
 
-        return response()->json(['message' => 'Вы не авторизованы!'], 401);
+        return redirect()->route('home');
     }
 }
