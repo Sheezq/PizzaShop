@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pizza;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\HtmlString;
 
 use App\Http\Controllers\{
     AuthController,
@@ -46,6 +48,41 @@ Route::get('/terms-of-service', fn() => view('terms-of-service'))->name('terms.o
 
 Route::get('/banned', fn() => view('banned'))->name('banned');
 
+Route::post('/contact', function (Request $request) {
+    $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email',
+        'message' => 'required|string',
+    ]);
+
+    Mail::send([], [], function ($message) use ($data) {
+        $message->to('admin@pizzeria.local')
+            ->subject('Новое сообщение с формы контактов')
+            ->html("
+                <h2>Новое сообщение с сайта</h2>
+                <p><strong>Имя:</strong> {$data['name']}</p>
+                <p><strong>Email:</strong> {$data['email']}</p>
+                <p><strong>Сообщение:</strong><br>{$data['message']}</p>
+            ");
+    });
+
+    return back()->with('success', 'Ваше сообщение успешно отправлено!');
+})->name('contact.submit');
+
+Route::get('/promo/twoforone', function () {
+    return view('promos.twoforone');
+})->name('promo.twoforone');
+
+Route::get('/promo/deliverydiscount', function () {
+    return view('promos.deliverydiscount');
+})->name('promo.deliverydiscount');
+
+Route::get('/promo/birthday', function () {
+    return view('promos.birthday');
+})->name('promo.birthday');
+
+
+
 // АВТОРИЗАЦИЯ
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
@@ -76,9 +113,11 @@ Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear')
 
 // СТРАНИЦЫ ДЛЯ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ (не забаненных)
 Route::middleware(['auth', 'check.banned'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.index');
+
 
     Route::get('/checkout', [CartController::class, 'checkout'])->name('payment.checkout');
     Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('payment.process');

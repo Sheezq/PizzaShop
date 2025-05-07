@@ -16,6 +16,13 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
+
+    public function show()
+    {
+        $user = Auth::user();
+
+        return view('profile.index', compact('user'));
+    }
     /**
      * Отображение профиля пользователя.
      */

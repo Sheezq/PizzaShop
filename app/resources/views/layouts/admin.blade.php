@@ -11,7 +11,7 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="{{ route('admin.pizzas.index') }}">Админ-панель</a>
-        <a href="{{ route('home') }}" class="btn btn-light">На главную</a>
+        <a href="{{ route('home') }}" class="btn btn-outline-light">На сайт</a>
     </div>
 </nav>
 

@@ -16,7 +16,7 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-2">📦 Заказ #{{ $order->id }}</h5>
                                 <p class="card-text mb-1">
-                                    <strong>Сумма:</strong> <span class="text-success">{{ number_format($order->total_price, 2) }} ₽</span>
+                                    <strong>Сумма:</strong> <span class="text-success">{{ number_format($order->total_price, 2) }} $</span>
                                 </p>
                                 <p class="card-text mb-1">
                                     <strong>Дата:</strong> {{ $order->created_at->format('d.m.Y H:i') }}
@@ -36,10 +36,10 @@
                                     <p class="fw-bold mb-2">Состав заказа:</p>
                                     <ul class="list-group list-group-flush">
                                         @foreach($order->items as $item)
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <li class="">
                                                 {{ $item['name'] }}
                                                 <span class="badge bg-primary rounded-pill">
-                                                    {{ $item['quantity'] }} × {{ number_format($item['price'], 2) }} ₽
+                                                    {{ $item['quantity'] }} × {{ number_format($item['price'], 2) }} $
                                                 </span>
                                             </li>
                                         @endforeach
@@ -52,4 +52,5 @@
             </div>
         @endif
     </div>
+
 @endsection

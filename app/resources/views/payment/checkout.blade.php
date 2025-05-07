@@ -22,16 +22,16 @@
                             <img src="{{ asset('storage/' . $pizza['image_url']) }}" alt="{{ $pizza['name'] }}" class="rounded shadow" style="width: 100px; height: 100px; object-fit: cover;">
                             <p class="mt-2">{{ $pizza['name'] }}</p>
                             <p>Количество: {{ $pizza['quantity'] }}</p>
-                            <p>Цена: {{ $pizza['price'] }} ₽</p>
+                            <p>Цена: {{ $pizza['price'] }} $</p>
                         </div>
                     @endforeach
                 </div>
             </div>
         @endif
 
-        <div class="payment-wrapper p-4 rounded shadow bg-white">
+        <div class="payment-wrapper p-4 rounded shadow">
             <p class="amount-label mb-3 text-center fs-5">
-                💰 Сумма к оплате: <strong class="text-primary">{{ number_format($total, 2) }} ₽</strong>
+                💰 Сумма к оплате: <strong class="text-primary">{{ number_format($total, 2) }} $</strong>
             </p>
 
             <form id="payment-form" method="POST" action="{{ route('checkout.process') }}">
@@ -81,7 +81,7 @@
             </form>
         </div>
     </div>
-
+    @include('layouts.footer')
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         const stripe = Stripe("{{ config('services.stripe.key') }}");

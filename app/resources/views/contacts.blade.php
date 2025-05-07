@@ -26,16 +26,16 @@
             <div class="col-md-6 mb-4">
                 <h4>Наши адреса</h4>
                 <ul class="list-unstyled">
-                    <li><strong>Главный офис:</strong> ул. Яшки район Чебурашки</li>
-                    <li><strong>Филиал на Тверской:</strong> ул. Колотушкина</li>
-                    <li><strong>Филиал на Арбате:</strong> ул. РоманаЧертилова</li>
+                    <li><strong>Минск:</strong> ул. Романа 1</li>
+                    <li><strong>Жодино:</strong> ул. Дмитрия 2</li>
+                    <li><strong>Гродно:</strong> ул. Данилы 3</li>
                 </ul>
             </div>
 
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6 mb-4" style="text-align: right;">
                 <h4>Контактные данные</h4>
                 <ul class="list-unstyled">
-                    <li><strong>Телефон:</strong> +testtest</li>
+                    <li><strong>Телефон:</strong> +1111111111</li>
                     <li><strong>Электронная почта:</strong> <a href="mailto:info@pizzeria.ru">info@pizzeria.ru</a></li>
                     <li><strong>Часы работы:</strong> Пн-Пт: 10:00 - 22:00, Сб-Вс: 12:00 - 23:00</li>
                 </ul>
@@ -58,7 +58,7 @@
             <label for="message" class="form-label">Ваше сообщение</label>
             <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+        <button type="submit" class="contact-btn btn btn-primary">Отправить сообщение</button>
     </form>
 
     @if(session('success'))

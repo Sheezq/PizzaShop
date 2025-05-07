@@ -14,13 +14,13 @@
 @include('layouts.navigation')
 
 <div class="container mt-5">
-    <h2 class="section-title text-center mb-4">Меню пицц</h2>
+    <h2 class="section-title text-center mb-4">Меню</h2>
 
     <div class="row">
         <!-- Левая колонка с фильтрами -->
         <div class="col-md-3 mb-4">
             <form method="GET" action="{{ route('menu') }}">
-                <div class="card p-3">
+                <div class="filter-box p-3">
                     <h5 class="mb-3">Поиск</h5>
                     <input type="text" name="query" class="form-control mb-3" placeholder="Поиск..." value="{{ request('query') }}">
 
@@ -68,7 +68,7 @@
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <div>
                                         <h5 class="pizza-title card-title">{{ $pizza->name }}</h5>
-                                        <p class="pizza-price card-text">Цена: {{ number_format($pizza->price, 2) }} ₽</p>
+                                        <p class="pizza-price card-text">Цена: {{ number_format($pizza->price, 2) }} $</p>
                                     </div>
 
                                     <button
@@ -94,7 +94,7 @@
                                     <div class="modal-body text-center">
                                         <img src="{{ $pizza->image_url }}" alt="{{ $pizza->name }}" class="img-fluid mb-3" style="max-height: 300px; object-fit: cover;">
                                         <p><strong>Описание:</strong> {{ $pizza->description }}</p>
-                                        <p><strong>Цена:</strong> {{ number_format($pizza->price, 2) }} ₽</p>
+                                        <p><strong>Цена:</strong> {{ number_format($pizza->price, 2) }} $</p>
                                     </div>
 
                                     <div class="modal-footer d-flex flex-column gap-2">

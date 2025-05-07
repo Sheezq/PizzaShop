@@ -27,7 +27,7 @@
                     <td><img src="{{ asset($pizza->image_url) }}" width="80"></td>
                     <td>{{ $pizza->name }}</td>
                     <td>{{ $pizza->description }}</td>
-                    <td>{{ $pizza->price }} ₽</td>
+                    <td>{{ $pizza->price }} $</td>
                     <td>
                         @if(is_object($pizza->type) && $pizza->type->name)
                             {{ $pizza->type->name }}

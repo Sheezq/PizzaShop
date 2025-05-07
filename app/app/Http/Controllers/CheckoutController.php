@@ -98,11 +98,11 @@ class CheckoutController extends Controller
         $message .= "🏠 Адрес: " . $order->address . "\n";
         $message .= "💬 Пожелания: " . ($order->note ?? '—') . "\n";
         $message .= "💳 Способ оплаты: " . $order->payment_method . "\n";
-        $message .= "💵 Сумма: " . $order->total_price . " ₽\n";
+        $message .= "💵 Сумма: " . $order->total_price . " $\n";
 
         $message .= "\n🍕 Товары в заказе:\n";
         foreach ($order->items as $item) {
-            $message .= "🧀 " . $item['name'] . " - " . $item['quantity'] . " шт. x " . $item['price'] . " ₽\n";
+            $message .= "🧀 " . $item['name'] . " - " . $item['quantity'] . " шт. x " . $item['price'] . " $\n";
         }
 
         $response = Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [

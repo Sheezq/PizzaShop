@@ -32,7 +32,7 @@
                         <th>Действия</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="cart_items">
                     @php $total = 0; @endphp
                     @foreach($cart as $id => $item)
                         @php $total += $item['price'] * $item['quantity']; @endphp
@@ -43,17 +43,22 @@
                                      style="max-height: 140px; object-fit: cover;"
                                      alt="{{ $item['name'] }}">
                             </td>
-                            <td class="fw-bold text-start">{{ $item['name'] }}</td>
-                            <td class="text-success fw-bold">{{ number_format($item['price'], 2) }} ₽</td>
-                            <td>{{ $item['quantity'] }}</td>
-                            <td class="d-flex justify-content-center gap-2">
+                            <td class="custom-td fw-bold text-start" style="color: #FF6347;">{{ $item['name'] }}</td>
+                            <td class=" fw-bold" style="color: #ced4da;">{{ number_format($item['price'], 2) }} $</td>
+                            <td style="color: #ced4da">{{ $item['quantity'] }}</td>
+                            <td class="btn_cart gap-2 d-flex justify-content-center align-items-center">
                                 <form action="{{ route('cart.add', $id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-success">+</button>
+                                    <button type="submit" class="btn btn-sm btn-success d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-plus-lg"></i> <!-- Иконка для добавления -->
+                                    </button>
                                 </form>
+
                                 <form action="{{ route('cart.remove', $id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger">-</button>
+                                    <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-dash-lg"></i> <!-- Иконка для удаления -->
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -82,6 +87,7 @@
                 </div>
             </div>
         @endif
-    </div>
 
+    </div>
+    @include('layouts.footer')
 @endsection

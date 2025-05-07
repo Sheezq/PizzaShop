@@ -63,7 +63,7 @@
                 <label for="message" class="form-label">Ваше сообщение</label>
                 <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+            <button type="submit" class="contact-btn btn btn-primary">Отправить сообщение</button>
         </form>
     </section>
 

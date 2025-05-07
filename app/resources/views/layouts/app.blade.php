@@ -13,27 +13,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <link href="{{ asset('style.css') }}" rel="stylesheet">
 </head>
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
-    @include('layouts.navigation')
+<body class="d-flex flex-column min-vh-100 font-sans antialiased">
 
-    @if (isset($header))
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
-    @endif
+@include('layouts.navigation')
 
-    <main>
-        @yield('content')
-    </main>
-</div>
+@if (isset($header))
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {{ $header }}
+        </div>
+    </header>
+@endif
+
+<main class="flex-grow-1">
+    @yield('content')
+</main>
+
+@include('layouts.footer')
+
 </body>
 </html>

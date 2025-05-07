@@ -13,9 +13,9 @@
 
 @include('layouts.navigation')
 
-<main class="container mt-5 mb-5">
+<main class="custom-info container mt-5 mb-5">
 
-    <section class="mb-5">
+    <section class="custom-info mb-5">
         <h2 class="text-center mb-4">О нас</h2>
         <p class="lead text-center">
             Наша пиццерия — это место, где каждый найдет пиццу по своему вкусу! 🍕

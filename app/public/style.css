@@ -1,10 +1,202 @@
 /*  Общие стили */
+
+.auth-form{
+    color: black;
+    width: 100%;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+:root {
+    --italian-red: #B22222;
+    --italian-green: #556B2F;
+    --italian-cream: #fdf5e6;
+    --italian-gold: #d4af37;
+}
+
+a{
+    text-decoration: underline;
+    color: inherit;
+}
+
+body{
+    background-image: url('/storage/images/background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Georgia', serif;
+    color: #fff;
+
+}
+
+
+.profile-container {
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+}
+.profile-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+.avatar-img, .default-avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 5px solid #f8c291;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.default-avatar {
+    background-color: #f5cba7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2.5rem;
+}
+.btn-custom {
+    background-color: #e67e22;
+    color: #fff;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+.btn-custom:hover {
+    background-color: #cf711f;
+}
+.info-label {
+    font-weight: 600;
+    color: #d35400;
+}
+
+.cart_items{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-title{
+    color: var(--italian-red);
+}
+
+.custom-disc{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-title{
+    text-decoration: #f3f4f6;
+}
+
+.filter-box{
+    background-color: rgba(255, 255, 255, 0.1); /* полупрозрачный белый */
+    backdrop-filter: blur(6px); /* размытие заднего фона */
+    padding: 1.5rem;
+    border-radius: 1rem;
+    color: #f1f1f1;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 300px;
+    font-family: 'Segoe UI', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.filter-box label {
+    font-weight: 600;
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.filter-box input[type="text"] {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+}
+
+.filter-box input[type="text"]::placeholder {
+    color: #ddd;
+}
+
+.filter-box .form-check {
+    margin-bottom: 0.5rem;
+}
+
+.filter-box .form-check-label {
+    margin-left: 0.4rem;
+    font-weight: 400;
+}
+
+.filter-box input[type="checkbox"] {
+    transform: scale(1.2);
+    accent-color: #ffc107;
+}
+
+.filter-box button {
+    margin-top: 1.2rem;
+    width: 100%;
+    background: linear-gradient(135deg, #007bff, #0056d2);
+    color: #fff;
+    border: none;
+    padding: 0.7rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: background 0.3s ease;
+}
+
+.filter-box button:hover {
+    background: linear-gradient(135deg, #0056d2, #003ba5);
+}
+
+.main_text{
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 1rem;
+    border-radius: 12px;
+
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.1); /* полупрозрачный белый */
+    border: 1px solid var(--italian-gold);
+}
+
+.card-body {
+    font-family: 'Georgia', serif;
+    color: #f3f4f6;
+}
+
+.card-title {
+    color: #f3f4f6;
+}
+
+.card-img-top {
+    border-radius: 8px;
+    filter: sepia(0.1) contrast(1.05);
+}
+
+
+
+
 .avatar-thumbnail {
-    width: 32px;
-    height: 32px;
+    width: 42px;
+    height: 42px;
     object-fit: cover;
     border-radius: 50%;
     margin-right: 8px;
+    border: 2px solid #fff;
 }
 
 /*  Поиск */
@@ -14,8 +206,36 @@
 }
 
 .custom-navbar {
-    background-color: #232323;
+    background-color: rgba(26, 26, 26, 0.7);
+    padding: 0.75rem 1rem;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    font-size: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
+
+.navbar .nav-link {
+    color: #f0f0f0;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+
+.btn-outline-light {
+    color: #f0f0f0;
+    border-color: #888;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+.navbar .nav-link:hover {
+    color: #ffb74d;
+}
+
+.btn-outline-light:hover {
+    background-color: #ffb74d;
+    color: #1a1a1a;
+}
+
 
 
 .search-form {
@@ -106,15 +326,29 @@
 /*  Таблица */
 table.table {
     border-radius: 12px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
 }
+
+custom-td {
+color: #ff001d;
+}
+
 table td, table th {
     text-align: center;
     vertical-align: middle;
 }
 
 /*  Кнопки */
+
+.btn_cart {
+color: #55ff0e;
+justify-content: center;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
 .btn {
     font-weight: bold;
     transition: transform 0.2s ease;
@@ -125,6 +359,11 @@ table td, table th {
 /*.btn-primary, .btn-success, .btn-warning, .btn-danger {
     margin-left: 10px;
 }*/
+
+.contact-btn {
+    background-color: #1a1a1a;
+border: none;
+}
 
 .btn-pay {
     background-color: #198754;
@@ -143,9 +382,9 @@ table td, table th {
 /* Оплата */
 .payment-wrapper {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 50px auto;
     padding: 2rem;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
     animation: fadeIn 0.6s ease-in-out;
@@ -209,6 +448,8 @@ table td, table th {
     margin-bottom: 1.25rem;
 }
 .form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
     width: 100%;
     padding: 0.625rem 1rem;
     border-radius: 0.5rem;
@@ -217,8 +458,11 @@ table td, table th {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 .form-control:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: #888;
+    outline: none;
+    box-shadow: none;
 }
 .error-msg {
     color: #dc2626;
@@ -232,6 +476,38 @@ table td, table th {
     align-items: center;
     margin-top: 1.5rem;
 }
+
+.form-select {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 2.5rem 0.6rem 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #f8f9fa;
+    background-color: rgba(26, 26, 26, 0.8); // тёмный с прозрачностью
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    border: 1px solid #444;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    appearance: none;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:hover {
+        border-color: #ffc107;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    }
+}
+
+
 .form-link {
     font-size: 0.9rem;
     color: #64748b;
@@ -263,6 +539,7 @@ table td, table th {
 }
 
 .user-name {
+
     font-weight: bold;
     color: #fff;
     gap: 8px;
@@ -400,6 +677,7 @@ table td, table th {
 /* акции */
 .row.g-4 {
     margin-top: 2rem;
+    margin-bottom: 50px;
 }
 
 /* Карточки акций */
@@ -428,22 +706,22 @@ table td, table th {
 
 .card-text {
     font-size: 1rem;
-    color: #6b7280;
+    color: #f3f4f6;
     text-align: center;
 }
 
 .section-title {
     font-size: 2rem;
     font-weight: 800;
-    color: #2d2d2d;
+    color: white;
     text-align: center;
     margin-bottom: 20px;
 }
 
 .footer {
-    background-color: #232323;
+    background-color: rgba(26, 26, 26, 0.7);
     padding: 1.5rem 0;
-    border-top: 1px solid #dee2e6;
+
 }
 
 .footer .text-muted {
@@ -451,7 +729,7 @@ table td, table th {
 }
 
 .footer a:hover {
-    color: #212529;
+    color:#ffb74d;
 }
 
 html, body {
@@ -474,18 +752,30 @@ footer {
     flex-shrink: 0;
 }
 
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
 
+    background: rgba(255, 255, 255, 0.05); /* полупрозрачный фон */
+    backdrop-filter: blur(10px); /* эффект стекла */
+    -webkit-backdrop-filter: blur(10px);
 
-body.light-mode {
-    background-color: #ffffff;
-    color: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 1rem;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    outline: none;
+    color: #f1f1f1;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-
-body.dark-mode {
-    background-color: #121212;
-    color: #ffffff;
+.custom-info{
+    text-decoration: #003ba5;
 }
+
 
 .google-login-btn {
     display: inline-flex;
@@ -508,10 +798,20 @@ body.dark-mode {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 70px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .navbar .dropdown-toggle {
     color: white !important;
 }
+
+
+
+
+
+
+
 
 
